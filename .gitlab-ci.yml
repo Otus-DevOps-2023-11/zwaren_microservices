@@ -37,7 +37,18 @@ deploy_dev_job:
     - echo 'Deploy'
   environment:
     name: dev
-    url: http://158.160.99.69
+    url: http://dev.example.com
+
+branch review:
+  stage: review
+  script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    url: http://$CI_ENVIRONMENT_SLUG.example.com
+  only:
+    - branches
+  except:
+    - master
 
 staging:
   stage: stage
@@ -48,7 +59,7 @@ staging:
    - echo 'Deploy'
   environment:
     name: stage
-    url: https://158.160.99.69
+    url: https://beta.example.com
 
 production:
   stage: production
@@ -59,4 +70,4 @@ production:
    - echo 'Deploy'
   environment:
     name: production
-    url: https://158.160.99.69
+    url: https://example.com
